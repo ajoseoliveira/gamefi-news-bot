@@ -1,0 +1,22 @@
+# fly.toml app configuration file generated for gamefi-news-bot on 2025-10-04T14:13:33-03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'gamefi-news-bot'
+primary_region = 'gru'
+
+[build]
+
+[env]
+  TZ = "America/Sao_Paulo"
+  TIMEZONE = "America/Sao_Paulo"
+  LOG_LEVEL = "INFO"
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+[processes]
+  app = "python main.py"

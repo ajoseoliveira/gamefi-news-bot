@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+*.log
+data/*.json
+logs/*.log
+.env
+.git/
+.gitignore
+test_*.py
+README.md

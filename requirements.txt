@@ -1,0 +1,30 @@
+# Dependências do GameFi News Bot
+
+# Cliente Anthropic para Claude API
+anthropic==0.39.0
+
+# Bot do Telegram
+python-telegram-bot==20.8
+
+# Agendamento de tarefas
+schedule==1.2.0
+
+# Requisições HTTP
+requests==2.31.0
+
+# Variáveis de ambiente
+python-dotenv==1.0.0
+
+# Parsing de datas
+python-dateutil==2.8.2
+
+# Timezone
+pytz==2024.1
+
+# Logs coloridos (opcional mas útil)
+colorlog==6.8.0
+
+# Validação de dados
+pydantic==2.5.3
+
+feedparser==6.0.11

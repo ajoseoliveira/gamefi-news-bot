@@ -1,0 +1,25 @@
+name: Start GameFi News Bot Machine
+
+on:
+  schedule:
+    # 8:30 AM Brasília (UTC-3 no verão, UTC-2 no padrão)
+    # Configurado para 11:30 UTC (verão) e 10:30 UTC (padrão)
+    # Usando 11:30 UTC como padrão
+    - cron: '30 11 * * *'
+  workflow_dispatch: # Permite executar manualmente
+
+jobs:
+  start-machine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start gamefi-news-bot machine
+        run: |
+          curl -X POST https://api.fly.io/graphql \
+            -H "Authorization: Bearer ${{ secrets.FLY_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "query": "mutation { machineStart(input: {id: \"d891dddce02318\", appId: \"gamefi-news-bot\"}) { ok } }"
+            }'
+
+      - name: Log start action
+        run: echo "GameFi News Bot machine started at $(date)"

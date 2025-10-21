@@ -1,0 +1,25 @@
+name: Stop GameFi News Bot Machine
+
+on:
+  schedule:
+    # 18:30 PM Brasília (UTC-3 no verão, UTC-2 no padrão)
+    # Configurado para 21:30 UTC (verão) e 20:30 UTC (padrão)
+    # Usando 21:30 UTC como padrão
+    - cron: '30 21 * * *'
+  workflow_dispatch: # Permite executar manualmente
+
+jobs:
+  stop-machine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stop gamefi-news-bot machine
+        run: |
+          curl -X POST https://api.fly.io/graphql \
+            -H "Authorization: Bearer ${{ secrets.FLY_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "query": "mutation { machineStop(input: {id: \"d891dddce02318\", appId: \"gamefi-news-bot\"}) { ok } }"
+            }'
+
+      - name: Log stop action
+        run: echo "GameFi News Bot machine stopped at $(date)"
