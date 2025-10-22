@@ -19,7 +19,8 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
-          /root/.fly/bin/flyctl machines stop d891dddce02318 --app gamefi-news-bot
+          export PATH="$PATH:$HOME/.fly/bin"
+          flyctl machines stop d891dddce02318 --app gamefi-news-bot
 
       - name: Log stop action
         run: echo "GameFi News Bot machine stopped at $(date)"
