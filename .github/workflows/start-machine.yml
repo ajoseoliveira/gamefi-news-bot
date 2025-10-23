@@ -15,10 +15,16 @@ jobs:
       - name: Setup Fly CLI
         uses: superfly/flyctl-actions/setup-flyctl@master
 
+      - name: Verify Fly CLI installation
+        run: which flyctl && flyctl version
+
       - name: Start gamefi-news-bot machine
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: flyctl machines start d891dddce02318 --app gamefi-news-bot || true
+        run: |
+          echo "Starting machine d891dddce02318..."
+          flyctl machines start d891dddce02318 --app gamefi-news-bot -v
+          echo "Machine start command completed"
 
       - name: Log start action
         run: echo "GameFi News Bot machine started at $(date)"
