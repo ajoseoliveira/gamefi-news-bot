@@ -12,18 +12,13 @@ jobs:
   start-machine:
     runs-on: ubuntu-latest
     steps:
-      - name: Start gamefi-news-bot machine using Fly API
+      - name: Start gamefi-news-bot machine using Fly REST API
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
-          curl -X POST https://api.fly.io/graphql \
+          curl -v -X POST https://api.fly.io/v1/apps/gamefi-news-bot/machines/d891dddce02318/start \
             -H "Authorization: Bearer $FLY_API_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d @- <<'EOF'
-          {
-            "query": "mutation { machineStart(input: {id: \"d891dddce02318\", appId: \"gamefi-news-bot\"}) { ok } }"
-          }
-          EOF
+            -H "Content-Type: application/json"
 
       - name: Log start action
         run: echo "GameFi News Bot machine started at $(date)"
