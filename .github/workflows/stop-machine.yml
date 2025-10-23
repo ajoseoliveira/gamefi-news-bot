@@ -12,13 +12,13 @@ jobs:
   stop-machine:
     runs-on: ubuntu-latest
     steps:
-      - name: Stop gamefi-news-bot machine using Fly REST API
+      - name: Setup Fly CLI
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Stop gamefi-news-bot machine
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: |
-          curl -v -X POST https://api.fly.io/v1/apps/gamefi-news-bot/machines/d891dddce02318/stop \
-            -H "Authorization: Bearer $FLY_API_TOKEN" \
-            -H "Content-Type: application/json"
+        run: flyctl machines stop d891dddce02318 --app gamefi-news-bot
 
       - name: Log stop action
         run: echo "GameFi News Bot machine stopped at $(date)"

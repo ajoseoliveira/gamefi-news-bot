@@ -12,13 +12,13 @@ jobs:
   start-machine:
     runs-on: ubuntu-latest
     steps:
-      - name: Start gamefi-news-bot machine using Fly REST API
+      - name: Setup Fly CLI
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Start gamefi-news-bot machine
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: |
-          curl -v -X POST https://api.fly.io/v1/apps/gamefi-news-bot/machines/d891dddce02318/start \
-            -H "Authorization: Bearer $FLY_API_TOKEN" \
-            -H "Content-Type: application/json"
+        run: flyctl machines start d891dddce02318 --app gamefi-news-bot
 
       - name: Log start action
         run: echo "GameFi News Bot machine started at $(date)"
