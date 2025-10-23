@@ -12,12 +12,18 @@ jobs:
   stop-machine:
     runs-on: ubuntu-latest
     steps:
-      - name: Stop gamefi-news-bot machine
+      - name: Stop gamefi-news-bot machine using Fly API
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
-          curl -L https://fly.io/install.sh | sh
-          $HOME/.fly/bin/flyctl machines stop d891dddce02318 --app gamefi-news-bot
+          curl -X POST https://api.fly.io/graphql \
+            -H "Authorization: Bearer $FLY_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d @- <<'EOF'
+          {
+            "query": "mutation { machineStop(input: {id: \"d891dddce02318\", appId: \"gamefi-news-bot\"}) { ok } }"
+          }
+          EOF
 
       - name: Log stop action
         run: echo "GameFi News Bot machine stopped at $(date)"
